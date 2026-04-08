@@ -34,11 +34,15 @@
 <body class="index-page">
 
   <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="header-progress-bar" id="headerProgressBar"></div>
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
       <a href="index.html" class="logo d-flex align-items-center me-auto">
-
-        <h1 class="sitename">MyPortfolio</h1>
+        <div class="logo-initials">AA</div>
+        <div class="logo-text">
+          <span class="logo-name">Ahmed Ali</span>
+          <span class="logo-title">Front-End Developer</span>
+        </div>
       </a>
 
       <nav id="navmenu" class="navmenu">
@@ -53,7 +57,10 @@
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
-      <a class="btn-getstarted" href="#about">Get Started</a>
+      <a class="btn-hireme" href="#contact">
+        <span>Hire Me</span>
+        <i class="bi bi-arrow-right"></i>
+      </a>
 
     </div>
   </header>
@@ -63,12 +70,27 @@
     <!-- Hero Section -->
     <section id="hero" class="hero section dark-background">
 
+      <!-- Animated background orbs -->
+      <div class="hero-bg" aria-hidden="true">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+      </div>
+
       <div class="container" data-aos="fade-up" data-aos-delay="100">
         <div class="row gy-4 align-items-center">
           <div class="col-lg-6 order-2 order-lg-1">
             <div class="hero-content">
+
+              <!-- Available badge -->
+              <div class="hero-greeting-badge" data-aos="fade-down" data-aos-delay="150">
+                <span class="badge-dot"></span>
+                Available for Work
+              </div>
+
               <h1 data-aos="fade-up" data-aos-delay="200">
-                Hello, I'm <span class="highlight">Ahmed Ali</span>
+                <span class="greeting-text">Hello, I'm</span>
+                <span class="highlight">Ahmed Ali</span>
               </h1>
 
               <h2 data-aos="fade-up" data-aos-delay="300">
@@ -83,15 +105,21 @@
               </p>
 
               <div class="hero-actions" data-aos="fade-up" data-aos-delay="500">
-                <a href="#portfolio" class="btn btn-primary">View Projects</a>
-                <a href="assets/cv/Ahmed Ali_CV.pdf" class="btn btn-outline" download target="_blank">Download CV</a>
+                <a href="#portfolio" class="btn btn-primary">
+                  <i class="bi bi-grid-3x3-gap-fill"></i>
+                  View Projects
+                </a>
+                <a href="assets/cv/Ahmed Ali_CV.pdf" class="btn btn-outline" download target="_blank">
+                  <i class="bi bi-download"></i>
+                  Download CV
+                </a>
               </div>
 
               <div class="social-links" data-aos="fade-up" data-aos-delay="600">
-                <a href="https://www.linkedin.com/in/ahmed-ali-b19450218/" target="_blank"><i
+                <a href="https://www.linkedin.com/in/ahmed-ali-b19450218/" target="_blank" title="LinkedIn"><i
                     class="bi bi-linkedin"></i></a>
-                <a href="https://github.com/Ahmeday5" target="_blank"><i class="bi bi-github"></i></a>
-                <a href="https://web.facebook.com/profile.php?id=61581147994815" target="_blank">
+                <a href="https://github.com/Ahmeday5" target="_blank" title="GitHub"><i class="bi bi-github"></i></a>
+                <a href="https://web.facebook.com/profile.php?id=61581147994815" target="_blank" title="Facebook">
                   <i class="bi bi-facebook"></i>
                 </a>
               </div>
@@ -100,8 +128,8 @@
           </div>
           <div class="col-lg-6 order-1 order-lg-2">
             <div class="hero-image" data-aos="zoom-in" data-aos-delay="300">
-              <div class="image-wrapper">
-                <img src="assets/img/person/photo.jpeg" alt="Sarah Mitchell" class="img-fluid">
+              <div class="image-wrapper" id="heroImageWrapper">
+                <img src="assets/img/person/photo.jpeg" alt="Ahmed Ali" class="img-fluid">
                 <div class="floating-elements">
                   <div class="floating-card design" data-aos="fade-left" data-aos-delay="700">
                     <i class="bi bi-braces"></i>
@@ -120,8 +148,15 @@
             </div>
           </div>
         </div>
-
       </div>
+
+      <!-- Scroll indicator -->
+      <a href="#about" class="hero-scroll-indicator" aria-label="Scroll to about section">
+        <span class="scroll-text">Scroll</span>
+        <div class="scroll-mouse">
+          <div class="scroll-wheel"></div>
+        </div>
+      </a>
 
     </section><!-- /Hero Section -->
 
@@ -1224,6 +1259,17 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+
+  <script>
+    // Reading progress bar
+    const progressBar = document.getElementById('headerProgressBar');
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      progressBar.style.width = progress + '%';
+    });
+  </script>
 
 </body>
 

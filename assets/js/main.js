@@ -215,6 +215,67 @@
   });
 
   /**
+   * Hero — 3D Tilt & Mouse Parallax on image + floating cards
+   */
+  (function heroInteractivity() {
+    const heroSection   = document.querySelector('#hero');
+    const imageWrapper  = document.getElementById('heroImageWrapper');
+    const floatingCards = document.querySelectorAll('#hero .floating-card');
+
+    if (!heroSection || !imageWrapper) return;
+
+    // Throttle helper — keeps mousemove smooth at ~60fps
+    let ticking = false;
+    let mouseX = 0, mouseY = 0;
+
+    heroSection.addEventListener('mousemove', function (e) {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      if (!ticking) {
+        requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
+    });
+
+    heroSection.addEventListener('mouseleave', function () {
+      requestAnimationFrame(resetParallax);
+    });
+
+    function updateParallax() {
+      ticking = false;
+      const rect   = heroSection.getBoundingClientRect();
+      // Normalised -1 → +1 from centre of section
+      const nx = ((mouseX - rect.left) / rect.width  - 0.5) * 2;
+      const ny = ((mouseY - rect.top)  / rect.height - 0.5) * 2;
+
+      // 3D tilt on image wrapper (subtle — 8° max)
+      const tiltX =  ny * -8;
+      const tiltY =  nx *  8;
+      imageWrapper.style.transform =
+        `perspective(900px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.02,1.02,1.02)`;
+      imageWrapper.style.transition = 'transform 0.1s linear';
+
+      // Parallax on floating cards (each moves at a different depth)
+      const depths = [14, -10, 8];
+      floatingCards.forEach(function (card, i) {
+        const depth = depths[i] || 10;
+        card.style.transform =
+          `translateX(${nx * depth}px) translateY(${ny * depth}px)`;
+        card.style.transition = 'transform 0.15s linear';
+      });
+    }
+
+    function resetParallax() {
+      imageWrapper.style.transform  = 'perspective(900px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)';
+      imageWrapper.style.transition = 'transform 0.6s cubic-bezier(0.4,0,0.2,1)';
+      floatingCards.forEach(function (card) {
+        card.style.transform  = '';
+        card.style.transition = 'transform 0.6s cubic-bezier(0.4,0,0.2,1)';
+      });
+    }
+  })();
+
+  /**
    * Navmenu Scrollspy
    */
   let navmenulinks = document.querySelectorAll('.navmenu a');
