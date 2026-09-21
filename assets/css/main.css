@@ -7,6 +7,14 @@
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --heading-font: "Mulish", sans-serif;
   --nav-font: "Raleway", sans-serif;
+  --arabic-font: "Cairo", "Tajawal", "Segoe UI", Tahoma, sans-serif;
+}
+
+/* Arabic typography — applied whenever the page is in Arabic, in both themes */
+:root[lang="ar"] {
+  --default-font: var(--arabic-font);
+  --heading-font: var(--arabic-font);
+  --nav-font: var(--arabic-font);
 }
 
 
@@ -28,6 +36,24 @@
   --nav-dropdown-hover-color: #ff4d4f; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
 }
 
+/* Light theme — activated via <html data-theme="light">. Site-wide toggle,
+   unrelated to the per-section .light-background/.dark-background presets below. */
+:root[data-theme="light"] {
+  --background-color: #f7f7f8;
+  --default-color: #3a3a3a;
+  --heading-color: #171717;
+  --accent-color: #e6383a;
+  --surface-color: #ffffff;
+  --contrast-color: #ffffff;
+
+  --nav-color: #3a3a3a;
+  --nav-hover-color: #e6383a;
+  --nav-mobile-background-color: #ffffff;
+  --nav-dropdown-background-color: #ffffff;
+  --nav-dropdown-color: #3a3a3a;
+  --nav-dropdown-hover-color: #e6383a;
+}
+
 /* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
 
 .light-background {
@@ -40,6 +66,22 @@
   --default-color: #ffffff;
   --heading-color: #ffffff;
   --surface-color: #252525;
+  --contrast-color: #ffffff;
+}
+
+/* In light theme, sections using these presets should follow the site-wide
+   light palette too, instead of staying visually dark — the whole page,
+   header included, switches together. */
+:root[data-theme="light"] .light-background {
+  --background-color: #eef0f3;
+  --surface-color: #ffffff;
+}
+
+:root[data-theme="light"] .dark-background {
+  --background-color: #f7f7f8;
+  --default-color: #3a3a3a;
+  --heading-color: #171717;
+  --surface-color: #ffffff;
   --contrast-color: #ffffff;
 }
 
@@ -134,7 +176,6 @@ h6 {
 # Global Header
 --------------------------------------------------------------*/
 .header {
-  --heading-color: #ffffff;
   color: var(--default-color);
   background-color: var(--background-color);
   padding: 0;
@@ -202,7 +243,7 @@ h6 {
   font-family: var(--heading-font);
   font-size: 17px;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--heading-color);
   line-height: 1.2;
   letter-spacing: -0.3px;
 }
@@ -329,6 +370,14 @@ h6 {
   --background-color: rgba(14, 14, 14, 0.88);
 }
 
+/* Light theme header backgrounds */
+:root[data-theme="light"] .scrolled .header,
+:root[data-theme="light"] .index-page.scrolled .header {
+  --background-color: rgba(255, 255, 255, 0.9);
+  border-bottom-color: rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+}
+
 /*--------------------------------------------------------------
 # Navigation Menu
 --------------------------------------------------------------*/
@@ -352,7 +401,7 @@ h6 {
 
   .navmenu a,
   .navmenu a:focus {
-    color: rgba(217, 217, 217, 0.8);
+    color: color-mix(in srgb, var(--nav-color), transparent 20%);
     padding: 0 14px;
     height: 70px;
     font-size: 14px;
@@ -397,7 +446,7 @@ h6 {
   .navmenu li:hover > a,
   .navmenu .active,
   .navmenu .active:focus {
-    color: #ffffff;
+    color: var(--heading-color);
   }
 
   .navmenu li:hover > a::after,
@@ -1301,9 +1350,16 @@ section,
   display: flex;
   align-items: center;
   gap: 9px;
+  /* Fixed dark glass chip, independent of site theme — text must stay
+     light regardless of --default-color, otherwise light theme's dark
+     --default-color renders near-invisible against this always-dark
+     background. */
+  color: #ffffff;
   font-weight: 600;
   font-size: 0.88rem;
   letter-spacing: 0.01em;
+  white-space: nowrap;
+  width: max-content;
   animation: floatCard 4.5s ease-in-out infinite;
   pointer-events: auto;
   cursor: default;
@@ -1322,7 +1378,12 @@ section,
 .hero .hero-image .floating-elements .floating-card i {
   font-size: 1.35rem;
   color: var(--accent-color);
+  flex-shrink: 0;
   filter: drop-shadow(0 0 5px color-mix(in srgb, var(--accent-color), transparent 45%));
+}
+
+.hero .hero-image .floating-elements .floating-card span {
+  white-space: nowrap;
 }
 
 .hero .hero-image .floating-elements .floating-card.design {
@@ -5245,4 +5306,473 @@ section,
     padding: 12px 25px;
     font-size: 14px;
   }
+}
+
+/*--------------------------------------------------------------
+# Theme + Language Toggle Buttons
+--------------------------------------------------------------*/
+.header-toggles {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-inline: 20px 20px;
+  padding-inline-start: 20px;
+  border-inline-start: 1px solid color-mix(in srgb, var(--default-color), transparent 85%);
+}
+
+.theme-toggle,
+.lang-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 80%);
+  background: color-mix(in srgb, var(--surface-color), transparent 25%);
+  color: var(--nav-color);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Soft accent glow that expands from the center on hover/focus, instead of
+   an abrupt flat color swap — reads as more deliberate/"designed". */
+.theme-toggle::before,
+.lang-toggle::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at center, var(--accent-color), color-mix(in srgb, var(--accent-color), #ff8800 40%));
+  transform: scale(0);
+  opacity: 0;
+  z-index: -1;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+}
+
+.theme-toggle:hover,
+.lang-toggle:hover,
+.theme-toggle:focus-visible,
+.lang-toggle:focus-visible {
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 6px 18px rgba(255, 77, 79, 0.35);
+  transform: translateY(-2px);
+}
+
+.theme-toggle:hover::before,
+.lang-toggle:hover::before,
+.theme-toggle:focus-visible::before,
+.lang-toggle:focus-visible::before {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.theme-toggle:active,
+.lang-toggle:active {
+  transform: translateY(0) scale(0.94);
+}
+
+.lang-toggle {
+  width: auto;
+  min-width: 40px;
+  padding: 0 14px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--nav-font);
+  letter-spacing: 0.5px;
+}
+
+/* Theme icon morph: sun + moon are both rendered and cross-faded/rotated
+   into place, rather than an instant class-swapped <i>. */
+.theme-toggle .icon-stack {
+  position: relative;
+  width: 18px;
+  height: 18px;
+}
+
+.theme-toggle .icon-stack i {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  transition:
+    transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.35s ease;
+}
+
+.theme-toggle .icon-sun {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+.theme-toggle .icon-moon {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.4);
+}
+
+:root[data-theme="light"] .theme-toggle .icon-sun {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.4);
+}
+
+:root[data-theme="light"] .theme-toggle .icon-moon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+/* Language toggle: the current-language label flips in on a short 3D rotate
+   whenever the language changes (driven by the .is-switching helper class
+   that theme.js adds for one animation cycle). */
+.lang-toggle .lang-label {
+  display: inline-block;
+}
+
+.lang-toggle.is-switching .lang-label {
+  animation: langFlip 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.lang-toggle.is-switching i {
+  animation: langSpin 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes langFlip {
+  0% {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+  49% {
+    transform: rotateX(90deg);
+    opacity: 0;
+  }
+  50% {
+    transform: rotateX(-90deg);
+    opacity: 0;
+  }
+  100% {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes langSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}
+
+/* Site-wide theme/language transition, powered by the native View
+   Transitions API (document.startViewTransition, see theme.js) in browsers
+   that support it (Chrome/Edge/Opera and their mobile equivalents): the
+   whole page is captured as a snapshot, the DOM is updated instantly, and
+   the browser cross-fades/wipes between the two snapshots as one GPU-driven
+   animation. We shape that transition into a circular reveal that expands
+   from the toggle button that was clicked, imitating the native OS
+   dark-mode wipe (macOS/Android). --theme-origin-x/-y are set by theme.js
+   from the button's on-screen position just before the toggle. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 2;
+  animation: themeRevealWipe 0.65s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+@keyframes themeRevealWipe {
+  from {
+    clip-path: circle(0% at var(--theme-origin-x, 50%) var(--theme-origin-y, 50%));
+  }
+  to {
+    clip-path: circle(150% at var(--theme-origin-x, 50%) var(--theme-origin-y, 50%));
+  }
+}
+
+/* Fallback for browsers without View Transitions support (Safari/Firefox at
+   the time of writing): theme.js adds this class for one animation cycle
+   instead, so every themeable surface fades together rather than snapping
+   instantly. Less spectacular than the circular wipe, but still a single,
+   deliberate, whole-page transition. */
+html.theme-transitioning-fallback,
+html.theme-transitioning-fallback body,
+html.theme-transitioning-fallback * {
+  transition:
+    background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+@media (max-width: 1200px) {
+  .header-toggles {
+    order: 2;
+    margin-inline: 8px;
+    padding-inline-start: 8px;
+  }
+
+  .btn-hireme {
+    order: 3;
+  }
+
+  .header .navmenu {
+    order: 4;
+  }
+}
+
+@media (max-width: 480px) {
+  .theme-toggle,
+  .lang-toggle {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+
+  .lang-toggle {
+    padding: 0 11px;
+    font-size: 11px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle,
+  .lang-toggle,
+  .theme-toggle::before,
+  .lang-toggle::before,
+  .theme-toggle .icon-stack i,
+  .lang-toggle.is-switching .lang-label,
+  .lang-toggle.is-switching i {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+
+  html.theme-transitioning-fallback,
+  html.theme-transitioning-fallback body,
+  html.theme-transitioning-fallback * {
+    transition: none !important;
+  }
+}
+
+/*--------------------------------------------------------------
+# RTL (Arabic) Layout Overrides
+--------------------------------------------------------------*/
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="rtl"] .php-email-form .error-message {
+  text-align: right;
+}
+
+/* Header / Logo */
+[dir="rtl"] .logo.d-flex.me-auto {
+  margin-inline-end: auto !important;
+  margin-inline-start: 0 !important;
+}
+
+[dir="rtl"] .btn-hireme {
+  margin-left: 0;
+  margin-right: 24px;
+}
+
+@media (max-width: 1200px) {
+  [dir="rtl"] .btn-hireme {
+    margin: 0 0 0 12px;
+  }
+}
+
+/* Desktop navmenu underline + icon spacing + dropdown side */
+@media (min-width: 1200px) {
+  [dir="rtl"] .navmenu a i,
+  [dir="rtl"] .navmenu a:focus i {
+    margin-left: 0;
+    margin-right: 5px;
+  }
+
+  [dir="rtl"] .navmenu li:last-child a {
+    padding-right: 14px;
+    padding-left: 0;
+  }
+
+  [dir="rtl"] .navmenu .dropdown ul {
+    left: auto;
+    right: 14px;
+  }
+
+  [dir="rtl"] .navmenu .dropdown .dropdown ul {
+    left: auto;
+    right: -90%;
+  }
+
+  [dir="rtl"] .navmenu .dropdown .dropdown:hover > ul {
+    left: auto;
+    right: -100%;
+  }
+}
+
+/* Mobile navmenu */
+@media (max-width: 1199px) {
+  [dir="rtl"] .mobile-nav-toggle {
+    margin-right: 0;
+    margin-left: 10px;
+  }
+
+  [dir="rtl"] .navmenu a i,
+  [dir="rtl"] .navmenu a:focus i {
+    margin-left: 0;
+    margin-right: 5px;
+  }
+
+  [dir="rtl"] .mobile-nav-active .mobile-nav-toggle {
+    right: auto;
+    left: 15px;
+  }
+}
+
+/* Hero section */
+[dir="rtl"] .hero-scroll-indicator {
+  left: auto;
+}
+
+[dir="rtl"] .greeting-text,
+[dir="rtl"] .hero .hero-content p {
+  text-align: right;
+}
+
+/* Resume — education timeline rail (mirrors to the right in RTL) */
+[dir="rtl"] .resume .education-section .education-timeline .timeline-track {
+  padding-left: 0;
+  padding-right: 2.5rem;
+}
+
+[dir="rtl"] .resume .education-section .education-timeline .timeline-track::before {
+  left: auto;
+  right: 10px;
+}
+
+[dir="rtl"] .resume .education-section .education-timeline .timeline-track .timeline-item .timeline-marker {
+  left: auto;
+  right: -3.5rem;
+}
+
+[dir="rtl"] .resume .education-section .education-timeline .timeline-track .timeline-item .timeline-content:hover {
+  transform: translateX(-5px);
+}
+
+[dir="rtl"] .resume .education-section .education-timeline .timeline-track .timeline-item .timeline-content .achievement {
+  border-left: none;
+  border-right: 3px solid var(--accent-color);
+}
+
+@media (max-width: 768px) {
+  [dir="rtl"] .resume .education-section .education-timeline .timeline-track {
+    padding-right: 2rem;
+    padding-left: 0;
+  }
+
+  [dir="rtl"] .resume .education-section .education-timeline .timeline-track .timeline-item .timeline-marker {
+    right: -2.3rem;
+    left: auto;
+  }
+}
+
+/* Service / Portfolio detail sub-templates (not on the single-page site today,
+   kept in sync for future reuse) */
+[dir="rtl"] .service-details .workflow-section .timeline {
+  padding-left: 0;
+  padding-right: 4rem;
+}
+
+[dir="rtl"] .service-details .workflow-section .timeline::before {
+  left: auto;
+  right: 1.5rem;
+}
+
+[dir="rtl"] .service-details .workflow-section .timeline .timeline-item .timeline-marker {
+  left: auto;
+  right: -4rem;
+}
+
+[dir="rtl"] .service-details .workflow-section .timeline .timeline-item .timeline-content {
+  border-left: none;
+  border-right: 3px solid var(--accent-color);
+}
+
+@media (max-width: 768px) {
+  [dir="rtl"] .service-details .workflow-section .timeline {
+    padding-right: 3rem;
+    padding-left: 0;
+  }
+
+  [dir="rtl"] .service-details .workflow-section .timeline::before {
+    right: 1rem;
+    left: auto;
+  }
+
+  [dir="rtl"] .service-details .workflow-section .timeline .timeline-item .timeline-marker {
+    right: -2.5rem;
+    left: auto;
+  }
+}
+
+[dir="rtl"] .portfolio-details .portfolio-content .highlights-box {
+  border-left: none;
+  border-right: 4px solid var(--accent-color);
+}
+
+[dir="rtl"] .portfolio-details .portfolio-content blockquote .quote-icon {
+  left: auto;
+  right: 20px;
+}
+
+[dir="rtl"] .portfolio-details .portfolio-content blockquote p,
+[dir="rtl"] .portfolio-details .portfolio-content blockquote .author {
+  padding-left: 0;
+  padding-right: 40px;
+}
+
+[dir="rtl"] .portfolio-details .sidebar .info-card .info-item .value {
+  text-align: right;
+}
+
+/* Contact form messages */
+[dir="rtl"] .contact .php-email-form .error-message {
+  text-align: right;
+}
+
+/* Footer */
+[dir="rtl"] .footer .footer-about .logo img {
+  margin-right: 0;
+  margin-left: 6px;
+}
+
+[dir="rtl"] .footer .footer-links ul i {
+  padding-right: 0;
+  padding-left: 2px;
 }

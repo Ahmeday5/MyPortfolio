@@ -106,12 +106,24 @@
 
   /**
    * Init typed.js
+   * Exposed on window so it can be re-run after the language toggle updates
+   * the `data-typed-items` attribute (translated strings), since Typed.js
+   * only reads that attribute once at construction time.
    */
-  const selectTyped = document.querySelector('.typed');
-  if (selectTyped) {
+  let typedInstance = null;
+
+  function initTyped() {
+    const selectTyped = document.querySelector('.typed');
+    if (!selectTyped) return;
+
     let typed_strings = selectTyped.getAttribute('data-typed-items');
     typed_strings = typed_strings.split(',');
-    new Typed('.typed', {
+
+    if (typedInstance && typeof typedInstance.destroy === 'function') {
+      typedInstance.destroy();
+    }
+
+    typedInstance = new Typed('.typed', {
       strings: typed_strings,
       loop: true,
       typeSpeed: 100,
@@ -119,6 +131,9 @@
       backDelay: 2000
     });
   }
+
+  initTyped();
+  window.PortfolioInitTyped = initTyped;
 
   /**
    * Animate the skills items on reveal

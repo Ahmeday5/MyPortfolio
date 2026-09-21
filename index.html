@@ -8,6 +8,25 @@
   <meta name="description" content="">
   <meta name="keywords" content="">
 
+  <!-- Theme + language flash prevention: apply saved (or default) theme and
+       language/direction to <html> before first paint. Defaults: dark theme,
+       English language, matching the current design. -->
+  <script>
+    (function () {
+      try {
+        var theme = localStorage.getItem('portfolio-theme') === 'light' ? 'light' : 'dark';
+        var lang = localStorage.getItem('portfolio-lang') === 'ar' ? 'ar' : 'en';
+      } catch (e) {
+        var theme = 'dark';
+        var lang = 'en';
+      }
+      var root = document.documentElement;
+      root.setAttribute('data-theme', theme);
+      root.setAttribute('lang', lang);
+      root.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    })();
+  </script>
+
   <!-- Favicons -->
   <link href="assets/img/person/photo.jpeg" rel="icon">
   <link href="assets/img/person/photo.jpeg" rel="apple-touch-icon">
@@ -16,7 +35,7 @@
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Mulish:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Mulish:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Cairo:wght@300;400;500;600;700;800;900&display=swap"
     rel="stylesheet">
 
   <!-- Vendor CSS Files -->
@@ -41,24 +60,37 @@
         <div class="logo-initials">AA</div>
         <div class="logo-text">
           <span class="logo-name">Ahmed Ali</span>
-          <span class="logo-title">Front-End Developer</span>
+          <span class="logo-title" data-i18n="logo.title">Front-End Developer</span>
         </div>
       </a>
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="#hero" class="active">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#resume">Resume</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#portfolio">Portfolio</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="#hero" class="active" data-i18n="nav.home">Home</a></li>
+          <li><a href="#about" data-i18n="nav.about">About</a></li>
+          <li><a href="#resume" data-i18n="nav.resume">Resume</a></li>
+          <li><a href="#services" data-i18n="nav.services">Services</a></li>
+          <li><a href="#portfolio" data-i18n="nav.portfolio">Portfolio</a></li>
+          <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
+      <div class="header-toggles">
+        <button type="button" id="themeToggleBtn" class="theme-toggle" aria-label="Switch to light theme" title="Switch to light theme">
+          <span class="icon-stack">
+            <i class="bi bi-sun icon-sun"></i>
+            <i class="bi bi-moon-stars icon-moon"></i>
+          </span>
+        </button>
+        <button type="button" id="langToggleBtn" class="lang-toggle" aria-label="التبديل إلى العربية" title="التبديل إلى العربية">
+          <i class="bi bi-translate"></i>
+          <span class="lang-label" data-i18n="toggle.lang">AR</span>
+        </button>
+      </div>
+
       <a class="btn-hireme" href="#contact">
-        <span>Hire Me</span>
+        <span data-i18n="nav.hireme">Hire Me</span>
         <i class="bi bi-arrow-right"></i>
       </a>
 
@@ -85,20 +117,20 @@
               <!-- Available badge -->
               <div class="hero-greeting-badge" data-aos="fade-down" data-aos-delay="150">
                 <span class="badge-dot"></span>
-                Available for Work
+                <span data-i18n="hero.badge">Available for Work</span>
               </div>
 
               <h1 data-aos="fade-up" data-aos-delay="200">
-                <span class="greeting-text">Hello, I'm</span>
-                <span class="highlight">Ahmed Ali</span>
+                <span class="greeting-text" data-i18n="hero.greeting">Hello, I'm</span>
+                <span class="highlight" data-i18n="hero.name">Ahmed Ali</span>
               </h1>
 
               <h2 data-aos="fade-up" data-aos-delay="300">
-                <span class="typed"
+                <span class="typed" data-i18n-attr="data-typed-items:hero.typed"
                   data-typed-items="Front-End Developer (Angular), Junior Full-Stack Developer, WordPress & WooCommerce Developer, REST API Integration"></span>
               </h2>
 
-              <p data-aos="fade-up" data-aos-delay="400">
+              <p data-aos="fade-up" data-aos-delay="400" data-i18n="hero.description">
                 Front-end focused developer with close to one year of production experience.
                 I build Angular admin dashboards, integrate REST APIs, and develop WordPress–ERP integrations with
                 clean, scalable code.
@@ -107,11 +139,11 @@
               <div class="hero-actions" data-aos="fade-up" data-aos-delay="500">
                 <a href="#portfolio" class="btn btn-primary">
                   <i class="bi bi-grid-3x3-gap-fill"></i>
-                  View Projects
+                  <span data-i18n="hero.viewProjects">View Projects</span>
                 </a>
                 <a href="assets/cv/AhmedAli_CV.pdf" class="btn btn-outline" download target="_blank">
                   <i class="bi bi-download"></i>
-                  Download CV
+                  <span data-i18n="hero.downloadCV">Download CV</span>
                 </a>
               </div>
 
@@ -133,15 +165,15 @@
                 <div class="floating-elements">
                   <div class="floating-card design" data-aos="fade-left" data-aos-delay="700">
                     <i class="bi bi-braces"></i>
-                    <span>Angular</span>
+                    <span data-i18n="hero.card.angular">Angular</span>
                   </div>
                   <div class="floating-card code" data-aos="fade-right" data-aos-delay="800">
                     <i class="bi bi-hdd-stack"></i>
-                    <span>Laravel</span>
+                    <span data-i18n="hero.card.laravel">Laravel</span>
                   </div>
                   <div class="floating-card creativity" data-aos="fade-up" data-aos-delay="900">
                     <i class="bi bi-wordpress"></i>
-                    <span>WordPress</span>
+                    <span data-i18n="hero.card.wordpress">WordPress</span>
                   </div>
                 </div>
               </div>
@@ -151,8 +183,8 @@
       </div>
 
       <!-- Scroll indicator -->
-      <a href="#about" class="hero-scroll-indicator" aria-label="Scroll to about section">
-        <span class="scroll-text">Scroll</span>
+      <a href="#about" class="hero-scroll-indicator" aria-label="Scroll to about section" data-i18n-attr="aria-label:hero.scrollAria">
+        <span class="scroll-text" data-i18n="hero.scroll">Scroll</span>
         <div class="scroll-mouse">
           <div class="scroll-wheel"></div>
         </div>
@@ -165,9 +197,9 @@
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
-        <span class="subtitle">About Me</span>
-        <h2>About Me</h2>
-        <p>
+        <span class="subtitle" data-i18n="about.subtitle">About Me</span>
+        <h2 data-i18n="about.title">About Me</h2>
+        <p data-i18n="about.intro">
           Front-end developer with hands-on experience building Angular dashboards, integrating REST APIs, and
           customizing WordPress solutions.
           I focus on clean code, performance, and creating smooth user experiences that solve real business problems.
@@ -184,27 +216,27 @@
                   <img src="assets/img/person/photo.jpeg" class="img-fluid" alt="">
                   <div class="status-indicator"></div>
                 </div>
-                <h3>Ahmed Ayf</h3>
-                <span class="role">Front-End Developer (Angular)</span>
+                <h3 data-i18n="about.profile.name">Ahmed AYF</h3>
+                <span class="role" data-i18n="about.profile.role">Front-End Developer (Angular)</span>
               </div>
 
               <div class="profile-stats">
                 <div class="stat-item">
                   <h4>+10</h4>
-                  <p>Projects</p>
+                  <p data-i18n="about.stat.projects">Projects</p>
                 </div>
                 <div class="stat-item">
                   <h4>1+</h4>
-                  <p>Years</p>
+                  <p data-i18n="about.stat.years">Years</p>
                 </div>
                 <div class="stat-item">
                   <h4>3</h4>
-                  <p>Tech Stacks</p>
+                  <p data-i18n="about.stat.stacks">Tech Stacks</p>
                 </div>
               </div>
 
               <div class="profile-actions">
-                <a href="#contact" class="btn-secondary"><i class="bi bi-envelope"></i> Contact</a>
+                <a href="#contact" class="btn-secondary"><i class="bi bi-envelope"></i> <span data-i18n="about.contact">Contact</span></a>
               </div>
             </div>
           </div>
@@ -212,12 +244,12 @@
           <div class="col-lg-8" data-aos="fade-left" data-aos-delay="200">
             <div class="content-wrapper">
               <div class="bio-section">
-                <div class="section-tag">About Me</div>
-                <h2>Building Fast & Clean Web Apps</h2>
-                <p> I’m a Front-End Developer specialized in Angular. I build responsive, high-performance web
+                <div class="section-tag" data-i18n="about.tag">About Me</div>
+                <h2 data-i18n="about.heading">Building Fast & Clean Web Apps</h2>
+                <p data-i18n="about.bio1"> I’m a Front-End Developer specialized in Angular. I build responsive, high-performance web
                   applications with clean UI and smooth user experience.
                 </p>
-                <p>
+                <p data-i18n="about.bio2">
                   I also have experience integrating APIs and working with Laravel & WordPress when needed.
                 </p>
               </div>
@@ -226,31 +258,31 @@
                 <div class="detail-item" data-aos="fade-up" data-aos-delay="250">
                   <i class="bi bi-briefcase"></i>
                   <div class="detail-content">
-                    <span>Experience</span>
-                    <strong>1+ Years</strong>
+                    <span data-i18n="about.detail.experience">Experience</span>
+                    <strong data-i18n="about.detail.experienceValue">1+ Years</strong>
                   </div>
                 </div>
 
                 <div class="detail-item" data-aos="fade-up" data-aos-delay="300">
                   <i class="bi bi-mortarboard"></i>
                   <div class="detail-content">
-                    <span>Degree</span>
-                    <strong>Bachelor of Computer & Information</strong>
+                    <span data-i18n="about.detail.degree">Degree</span>
+                    <strong data-i18n="about.detail.degreeValue">Bachelor of Computer & Information</strong>
                   </div>
                 </div>
 
                 <div class="detail-item" data-aos="fade-up" data-aos-delay="350">
                   <i class="bi bi-geo-alt"></i>
                   <div class="detail-content">
-                    <span>Based In</span>
-                    <strong>Egypt</strong>
+                    <span data-i18n="about.detail.based">Based In</span>
+                    <strong data-i18n="about.detail.basedValue">Egypt</strong>
                   </div>
                 </div>
 
                 <div class="detail-item" data-aos="fade-up" data-aos-delay="100">
                   <i class="bi bi-envelope"></i>
                   <div class="detail-content">
-                    <span>Email</span>
+                    <span data-i18n="about.detail.email">Email</span>
                     <strong>ahmedayf43@gmail.com</strong>
                   </div>
                 </div>
@@ -258,7 +290,7 @@
                 <div class="detail-item" data-aos="fade-up" data-aos-delay="150">
                   <i class="bi bi-phone"></i>
                   <div class="detail-content">
-                    <span>Phone</span>
+                    <span data-i18n="about.detail.phone">Phone</span>
                     <strong>+201154113708</strong>
                   </div>
                 </div>
@@ -266,20 +298,20 @@
                 <div class="detail-item" data-aos="fade-up" data-aos-delay="200">
                   <i class="bi bi-calendar-check"></i>
                   <div class="detail-content">
-                    <span>Availability</span>
-                    <strong>Available for Full-Time / Part-Time / Remote</strong>
+                    <span data-i18n="about.detail.availability">Availability</span>
+                    <strong data-i18n="about.detail.availabilityValue">Available for Full-Time / Part-Time / Remote</strong>
                   </div>
                 </div>
               </div>
 
               <div class="skills-showcase" data-aos="fade-up" data-aos-delay="250">
-                <div class="section-tag">Core Skills</div>
-                <h3>Technical Proficiency</h3>
+                <div class="section-tag" data-i18n="about.skillsTag">Core Skills</div>
+                <h3 data-i18n="about.skillsHeading">Technical Proficiency</h3>
 
                 <div class="skills-list skills-animation">
                   <div class="skill-item">
                     <div class="skill-info">
-                      <span class="skill-name">Angular</span>
+                      <span class="skill-name" data-i18n="about.skill.angular">Angular</span>
                       <span class="skill-percent">70%</span>
                     </div>
                     <div class="progress">
@@ -290,7 +322,7 @@
 
                   <div class="skill-item">
                     <div class="skill-info">
-                      <span class="skill-name">TypeScript</span>
+                      <span class="skill-name" data-i18n="about.skill.typescript">TypeScript</span>
                       <span class="skill-percent">70%</span>
                     </div>
                     <div class="progress">
@@ -301,7 +333,7 @@
 
                   <div class="skill-item">
                     <div class="skill-info">
-                      <span class="skill-name">HTML / CSS / Bootstrap</span>
+                      <span class="skill-name" data-i18n="about.skill.htmlcss">HTML / CSS / Bootstrap</span>
                       <span class="skill-percent">90%</span>
                     </div>
                     <div class="progress">
@@ -312,7 +344,7 @@
 
                   <div class="skill-item">
                     <div class="skill-info">
-                      <span class="skill-name">JavaScript</span>
+                      <span class="skill-name" data-i18n="about.skill.javascript">JavaScript</span>
                       <span class="skill-percent">70%</span>
                     </div>
                     <div class="progress">
@@ -323,7 +355,7 @@
 
                   <div class="skill-item">
                     <div class="skill-info">
-                      <span class="skill-name">PHP / Laravel / REST APIs</span>
+                      <span class="skill-name" data-i18n="about.skill.php">PHP / Laravel / REST APIs</span>
                       <span class="skill-percent">60%</span>
                     </div>
                     <div class="progress">
@@ -334,7 +366,7 @@
 
                   <div class="skill-item">
                     <div class="skill-info">
-                      <span class="skill-name">MySQL</span>
+                      <span class="skill-name" data-i18n="about.skill.mysql">MySQL</span>
                       <span class="skill-percent">60%</span>
                     </div>
                     <div class="progress">
@@ -345,7 +377,7 @@
 
                   <div class="skill-item">
                     <div class="skill-info">
-                      <span class="skill-name">WordPress</span>
+                      <span class="skill-name" data-i18n="about.skill.wordpress">WordPress</span>
                       <span class="skill-percent">60%</span>
                     </div>
                     <div class="progress">
@@ -370,9 +402,9 @@
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
-        <span class="subtitle">Resume</span>
-        <h2>Resume</h2>
-        <p>
+        <span class="subtitle" data-i18n="resume.subtitle">Resume</span>
+        <h2 data-i18n="resume.title">Resume</h2>
+        <p data-i18n="resume.intro">
           Front-end focused developer with close to one year of production experience building Angular admin dashboards,
           integrating REST APIs, and developing WordPress & WooCommerce integrations with external ERP systems.
         </p>
@@ -386,9 +418,9 @@
             <div class="experience-section">
               <div class="section-header" data-aos="fade-right" data-aos-delay="200">
                 <div class="header-content">
-                  <span class="section-badge">Experience</span>
-                  <h2>Professional Journey</h2>
-                  <p>
+                  <span class="section-badge" data-i18n="resume.exp.badge">Experience</span>
+                  <h2 data-i18n="resume.exp.heading">Professional Journey</h2>
+                  <p data-i18n="resume.exp.intro">
                     Focused on building data-heavy dashboards, improving performance, and delivering real-world features
                     used daily by real users.
                   </p>
@@ -403,26 +435,26 @@
                     <div class="company-logo">
                       <i class="bi bi-buildings"></i>
                     </div>
-                    <div class="period-badge">Current</div>
+                    <div class="period-badge" data-i18n="resume.exp1.current">Current</div>
                   </div>
 
                   <div class="card-body">
-                    <h3>Front-End Developer (Angular)</h3>
-                    <p class="company-name">TheOne System</p>
-                    <span class="duration">Feb 2025 - Present</span>
+                    <h3 data-i18n="resume.exp1.title">Front-End Developer (Angular)</h3>
+                    <p class="company-name" data-i18n="resume.exp1.company">TheOne System</p>
+                    <span class="duration" data-i18n="resume.exp1.duration">Feb 2025 - Present</span>
 
-                    <p class="description">
+                    <p class="description" data-i18n="resume.exp1.description">
                       Built and maintained Angular admin dashboards, integrated APIs with role-based access, and
                       delivered
                       real-time features using Firebase across multiple production applications.
                     </p>
 
                     <div class="skills-tags">
-                      <span class="skill-tag">Angular</span>
-                      <span class="skill-tag">REST APIs</span>
-                      <span class="skill-tag">Firebase</span>
-                      <span class="skill-tag">RBAC</span>
-                      <span class="skill-tag">Performance</span>
+                      <span class="skill-tag" data-i18n="resume.exp1.tag.angular">Angular</span>
+                      <span class="skill-tag" data-i18n="resume.exp1.tag.rest">REST APIs</span>
+                      <span class="skill-tag" data-i18n="resume.exp1.tag.firebase">Firebase</span>
+                      <span class="skill-tag" data-i18n="resume.exp1.tag.rbac">RBAC</span>
+                      <span class="skill-tag" data-i18n="resume.exp1.tag.performance">Performance</span>
                     </div>
                   </div>
                 </div>
@@ -436,11 +468,11 @@
                   </div>
 
                   <div class="card-body">
-                    <h3>Key Achievements</h3>
-                    <p class="company-name">Highlights</p>
-                    <span class="duration">2025</span>
+                    <h3 data-i18n="resume.exp2.title">Key Achievements</h3>
+                    <p class="company-name" data-i18n="resume.exp2.company">Highlights</p>
+                    <span class="duration" data-i18n="resume.exp2.duration">2025</span>
 
-                    <p class="description">
+                    <p class="description" data-i18n="resume.exp2.description">
                       • Resolved complex Angular frontend bugs that improved page load speed by 25% <br>
                       • Coordinated feature delivery across 3 web applications <br>
                       • Integrated REST APIs and role-based dashboards for 200+ users <br>
@@ -458,20 +490,20 @@
                   </div>
 
                   <div class="card-body">
-                    <h3>Junior Full-Stack (Side Project)</h3>
-                    <p class="company-name">Laravel Internal System</p>
-                    <span class="duration">2025</span>
+                    <h3 data-i18n="resume.exp3.title">Junior Full-Stack (Side Project)</h3>
+                    <p class="company-name" data-i18n="resume.exp3.company">Laravel Internal System</p>
+                    <span class="duration" data-i18n="resume.exp3.duration">2025</span>
 
-                    <p class="description">
+                    <p class="description" data-i18n="resume.exp3.description">
                       Engineered a Laravel-based management system with authentication, role-based access control, and
                       database-driven workflows.
                     </p>
 
                     <div class="skills-tags">
-                      <span class="skill-tag">Laravel</span>
-                      <span class="skill-tag">MySQL</span>
-                      <span class="skill-tag">Authentication</span>
-                      <span class="skill-tag">CRUD</span>
+                      <span class="skill-tag" data-i18n="resume.exp3.tag.laravel">Laravel</span>
+                      <span class="skill-tag" data-i18n="resume.exp3.tag.mysql">MySQL</span>
+                      <span class="skill-tag" data-i18n="resume.exp3.tag.auth">Authentication</span>
+                      <span class="skill-tag" data-i18n="resume.exp3.tag.crud">CRUD</span>
                     </div>
                   </div>
                 </div>
@@ -485,9 +517,9 @@
             <div class="education-section">
               <div class="section-header" data-aos="fade-left" data-aos-delay="200">
                 <div class="header-content">
-                  <span class="section-badge">Education</span>
-                  <h2>Academic Background</h2>
-                  <p>
+                  <span class="section-badge" data-i18n="resume.edu.badge">Education</span>
+                  <h2 data-i18n="resume.edu.heading">Academic Background</h2>
+                  <p data-i18n="resume.edu.intro">
                     Strong computer science foundation with hands-on experience building real systems and
                     production-ready
                     dashboards.
@@ -506,21 +538,21 @@
 
                     <div class="timeline-content">
                       <div class="education-meta">
-                        <span class="year-range">Aug 2019 - May 2023</span>
-                        <span class="degree-level">Bachelor</span>
+                        <span class="year-range" data-i18n="resume.edu1.years">Aug 2019 - May 2023</span>
+                        <span class="degree-level" data-i18n="resume.edu1.level">Bachelor</span>
                       </div>
 
-                      <h4>Bachelor of Computers and Information (Computer Science)</h4>
-                      <p class="institution">Al-Shorouk Academy</p>
+                      <h4 data-i18n="resume.edu1.title">Bachelor of Computers and Information (Computer Science)</h4>
+                      <p class="institution" data-i18n="resume.edu1.institution">Al-Shorouk Academy</p>
 
-                      <p class="description">
+                      <p class="description" data-i18n="resume.edu1.description">
                         GPA: 70% (Good). Focused on software development fundamentals, databases, and practical
                         programming.
                       </p>
 
                       <div class="achievement">
                         <i class="bi bi-award"></i>
-                        <span>Graduated with Good grade</span>
+                        <span data-i18n="resume.edu1.achievement">Graduated with Good grade</span>
                       </div>
                     </div>
                   </div>
@@ -533,24 +565,24 @@
 
                     <div class="timeline-content">
                       <div class="education-meta">
-                        <span class="year-range">2024 - 2025</span>
-                        <span class="degree-level">Certificates</span>
+                        <span class="year-range" data-i18n="resume.edu2.years">2024 - 2025</span>
+                        <span class="degree-level" data-i18n="resume.edu2.level">Certificates</span>
                       </div>
 
-                      <h4>Courses & Learning</h4>
+                      <h4 data-i18n="resume.edu2.title">Courses & Learning</h4>
 
                       <div class="certifications-list">
                         <div class="cert-item">
-                          <span class="cert-name">Angular & Front-End Development</span>
-                          <span class="cert-year">2025</span>
+                          <span class="cert-name" data-i18n="resume.edu2.cert1.name">Angular & Front-End Development</span>
+                          <span class="cert-year" data-i18n="resume.edu2.cert1.year">2025</span>
                         </div>
                         <div class="cert-item">
-                          <span class="cert-name">WordPress & WooCommerce Customization</span>
-                          <span class="cert-year">2024</span>
+                          <span class="cert-name" data-i18n="resume.edu2.cert2.name">WordPress & WooCommerce Customization</span>
+                          <span class="cert-year" data-i18n="resume.edu2.cert2.year">2024</span>
                         </div>
                         <div class="cert-item">
-                          <span class="cert-name">Laravel & REST API Integration</span>
-                          <span class="cert-year">2024</span>
+                          <span class="cert-name" data-i18n="resume.edu2.cert3.name">Laravel & REST API Integration</span>
+                          <span class="cert-year" data-i18n="resume.edu2.cert3.year">2024</span>
                         </div>
                       </div>
 
@@ -574,9 +606,9 @@
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
-        <span class="subtitle">Services</span>
-        <h2>Services</h2>
-        <p>
+        <span class="subtitle" data-i18n="services.subtitle">Services</span>
+        <h2 data-i18n="services.title">Services</h2>
+        <p data-i18n="services.intro">
           I build fast, responsive web applications and dashboards using Angular, and I develop WordPress solutions
           integrated with external APIs and ERP systems.
         </p>
@@ -592,10 +624,10 @@
               <div class="icon-wrapper">
                 <i class="bi bi-lightning-charge"></i>
               </div>
-              <h4>Angular Web Apps</h4>
-              <p>Modern SPA applications with clean UI, reusable components, and scalable architecture.</p>
+              <h4 data-i18n="services.s1.title">Angular Web Apps</h4>
+              <p data-i18n="services.s1.desc">Modern SPA applications with clean UI, reusable components, and scalable architecture.</p>
               <a href="#contact" class="read-more">
-                <span>Contact</span>
+                <span data-i18n="services.contact">Contact</span>
                 <i class="bi bi-arrow-right"></i>
               </a>
             </div>
@@ -604,14 +636,14 @@
           <!-- Dashboards -->
           <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="200">
             <div class="service-item featured">
-              <div class="featured-tag">Featured</div>
+              <div class="featured-tag" data-i18n="services.s2.featured">Featured</div>
               <div class="icon-wrapper">
                 <i class="bi bi-columns-gap"></i>
               </div>
-              <h4>Admin Dashboards</h4>
-              <p>Data-heavy dashboards with role-based access, tables, filters, and real-time updates.</p>
+              <h4 data-i18n="services.s2.title">Admin Dashboards</h4>
+              <p data-i18n="services.s2.desc">Data-heavy dashboards with role-based access, tables, filters, and real-time updates.</p>
               <a href="#contact" class="read-more">
-                <span>Contact</span>
+                <span data-i18n="services.contact">Contact</span>
                 <i class="bi bi-arrow-right"></i>
               </a>
             </div>
@@ -623,10 +655,10 @@
               <div class="icon-wrapper">
                 <i class="bi bi-plug"></i>
               </div>
-              <h4>API Integration</h4>
-              <p>Integrate REST APIs with secure authentication and clean error handling.</p>
+              <h4 data-i18n="services.s3.title">API Integration</h4>
+              <p data-i18n="services.s3.desc">Integrate REST APIs with secure authentication and clean error handling.</p>
               <a href="#contact" class="read-more">
-                <span>Contact</span>
+                <span data-i18n="services.contact">Contact</span>
                 <i class="bi bi-arrow-right"></i>
               </a>
             </div>
@@ -638,10 +670,10 @@
               <div class="icon-wrapper">
                 <i class="bi bi-wordpress"></i>
               </div>
-              <h4>WordPress Development</h4>
-              <p>Custom pages with Elementor, performance optimization, and clean responsive design.</p>
+              <h4 data-i18n="services.s4.title">WordPress Development</h4>
+              <p data-i18n="services.s4.desc">Custom pages with Elementor, performance optimization, and clean responsive design.</p>
               <a href="#contact" class="read-more">
-                <span>Contact</span>
+                <span data-i18n="services.contact">Contact</span>
                 <i class="bi bi-arrow-right"></i>
               </a>
             </div>
@@ -653,10 +685,10 @@
               <div class="icon-wrapper">
                 <i class="bi bi-bag-check"></i>
               </div>
-              <h4>WooCommerce Customization</h4>
-              <p>Customize shop pages, categories, filters, and product layouts based on business needs.</p>
+              <h4 data-i18n="services.s5.title">WooCommerce Customization</h4>
+              <p data-i18n="services.s5.desc">Customize shop pages, categories, filters, and product layouts based on business needs.</p>
               <a href="#contact" class="read-more">
-                <span>Contact</span>
+                <span data-i18n="services.contact">Contact</span>
                 <i class="bi bi-arrow-right"></i>
               </a>
             </div>
@@ -668,10 +700,10 @@
               <div class="icon-wrapper">
                 <i class="bi bi-diagram-3"></i>
               </div>
-              <h4>ERP Integration</h4>
-              <p>Sync products & categories from external ERP APIs with secure and automated updates.</p>
+              <h4 data-i18n="services.s6.title">ERP Integration</h4>
+              <p data-i18n="services.s6.desc">Sync products & categories from external ERP APIs with secure and automated updates.</p>
               <a href="#contact" class="read-more">
-                <span>Contact</span>
+                <span data-i18n="services.contact">Contact</span>
                 <i class="bi bi-arrow-right"></i>
               </a>
             </div>
@@ -683,10 +715,10 @@
               <div class="icon-wrapper">
                 <i class="bi bi-layers"></i>
               </div>
-              <h4>Laravel Back-End</h4>
-              <p>Build secure back-end systems with authentication, CRUD, and database design.</p>
+              <h4 data-i18n="services.s7.title">Laravel Back-End</h4>
+              <p data-i18n="services.s7.desc">Build secure back-end systems with authentication, CRUD, and database design.</p>
               <a href="#contact" class="read-more">
-                <span>Contact</span>
+                <span data-i18n="services.contact">Contact</span>
                 <i class="bi bi-arrow-right"></i>
               </a>
             </div>
@@ -698,10 +730,10 @@
               <div class="icon-wrapper">
                 <i class="bi bi-speedometer2"></i>
               </div>
-              <h4>Performance Optimization</h4>
-              <p>Improve website speed, fix bottlenecks, and optimize UX for better conversions.</p>
+              <h4 data-i18n="services.s8.title">Performance Optimization</h4>
+              <p data-i18n="services.s8.desc">Improve website speed, fix bottlenecks, and optimize UX for better conversions.</p>
               <a href="#contact" class="read-more">
-                <span>Contact</span>
+                <span data-i18n="services.contact">Contact</span>
                 <i class="bi bi-arrow-right"></i>
               </a>
             </div>
@@ -719,9 +751,9 @@
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
-        <span class="subtitle">Portfolio</span>
-        <h2>Portfolio</h2>
-        <p>
+        <span class="subtitle" data-i18n="portfolio.subtitle">Portfolio</span>
+        <h2 data-i18n="portfolio.title">Portfolio</h2>
+        <p data-i18n="portfolio.intro">
           A selection of my best work in Angular, Laravel, WordPress, and API-based dashboards.
           Screenshots are used for confidential projects.
         </p>
@@ -733,13 +765,13 @@
 
           <!-- Filters -->
           <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="200">
-            <li data-filter="*" class="filter-active">All</li>
-            <li data-filter=".filter-dashboards">Dashboards</li>
-            <li data-filter=".filter-ecommerce">WooCommerce</li>
-            <li data-filter=".filter-wordpress">WordPress</li>
-            <li data-filter=".filter-laravel">Laravel / PHP</li>
-            <li data-filter=".filter-frontend">Frontend</li>
-            <li data-filter=".filter-system">System</li>
+            <li data-filter="*" class="filter-active" data-i18n="portfolio.filter.all">All</li>
+            <li data-filter=".filter-dashboards" data-i18n="portfolio.filter.dashboards">Dashboards</li>
+            <li data-filter=".filter-ecommerce" data-i18n="portfolio.filter.ecommerce">WooCommerce</li>
+            <li data-filter=".filter-wordpress" data-i18n="portfolio.filter.wordpress">WordPress</li>
+            <li data-filter=".filter-laravel" data-i18n="portfolio.filter.laravel">Laravel / PHP</li>
+            <li data-filter=".filter-frontend" data-i18n="portfolio.filter.frontend">Frontend</li>
+            <li data-filter=".filter-system" data-i18n="portfolio.filter.system">System</li>
           </ul>
 
           <!-- Projects Grid -->
@@ -756,8 +788,8 @@
 
                   <div class="portfolio-overlay">
                     <div class="portfolio-info">
-                      <span class="project-category">Dashboards</span>
-                      <h4>Order Dashboard</h4>
+                      <span class="project-category" data-i18n="portfolio.cat.dashboards">Dashboards</span>
+                      <h4 data-i18n="portfolio.p1.title">Order Dashboard</h4>
                     </div>
 
                     <div class="portfolio-actions">
@@ -807,8 +839,8 @@
 
                   <div class="portfolio-overlay">
                     <div class="portfolio-info">
-                      <span class="project-category">WooCommerce</span>
-                      <h4>WooCommerce + External API Products</h4>
+                      <span class="project-category" data-i18n="portfolio.cat.ecommerce">WooCommerce</span>
+                      <h4 data-i18n="portfolio.p2.title">WooCommerce + External API Products</h4>
                     </div>
 
                     <div class="portfolio-actions">
@@ -851,8 +883,8 @@
 
                   <div class="portfolio-overlay">
                     <div class="portfolio-info">
-                      <span class="project-category">WooCommerce</span>
-                      <h4>Plan Interior</h4>
+                      <span class="project-category" data-i18n="portfolio.cat.ecommerce">WooCommerce</span>
+                      <h4 data-i18n="portfolio.p3.title">Plan Interior</h4>
                     </div>
 
                     <div class="portfolio-actions">
@@ -900,8 +932,8 @@
 
                   <div class="portfolio-overlay">
                     <div class="portfolio-info">
-                      <span class="project-category">Dashboards</span>
-                      <h4>Medical Consultation Platform (sheffa)</h4>
+                      <span class="project-category" data-i18n="portfolio.cat.dashboards">Dashboards</span>
+                      <h4 data-i18n="portfolio.p4.title">Medical Consultation Platform (sheffa)</h4>
                     </div>
 
                     <div class="portfolio-actions">
@@ -954,8 +986,8 @@
 
                   <div class="portfolio-overlay">
                     <div class="portfolio-info">
-                      <span class="project-category">Dashboards</span>
-                      <h4>Hekma Dashboard</h4>
+                      <span class="project-category" data-i18n="portfolio.cat.dashboards">Dashboards</span>
+                      <h4 data-i18n="portfolio.p5.title">Hekma Dashboard</h4>
                     </div>
 
                     <div class="portfolio-actions">
@@ -998,8 +1030,8 @@
 
                   <div class="portfolio-overlay">
                     <div class="portfolio-info">
-                      <span class="project-category">Dashboards</span>
-                      <h4>Bayya Supplier Dashboard</h4>
+                      <span class="project-category" data-i18n="portfolio.cat.dashboards">Dashboards</span>
+                      <h4 data-i18n="portfolio.p6.title">Bayya Supplier Dashboard</h4>
                     </div>
 
                     <div class="portfolio-actions">
@@ -1045,8 +1077,8 @@
 
                   <div class="portfolio-overlay">
                     <div class="portfolio-info">
-                      <span class="project-category">Dashboards</span>
-                      <h4>Rehana</h4>
+                      <span class="project-category" data-i18n="portfolio.cat.dashboards">Dashboards</span>
+                      <h4 data-i18n="portfolio.p7.title">Rehana</h4>
                     </div>
 
                     <div class="portfolio-actions">
@@ -1095,8 +1127,8 @@
 
                   <div class="portfolio-overlay">
                     <div class="portfolio-info">
-                      <span class="project-category">Laravel / PHP</span>
-                      <h4>law-office System</h4>
+                      <span class="project-category" data-i18n="portfolio.cat.laravel">Laravel / PHP</span>
+                      <h4 data-i18n="portfolio.p8.title">law-office System</h4>
                     </div>
 
                     <div class="portfolio-actions">
@@ -1157,8 +1189,8 @@
 
                   <div class="portfolio-overlay">
                     <div class="portfolio-info">
-                      <span class="project-category">WordPress</span>
-                      <h4>WordPress Website (Elementor)</h4>
+                      <span class="project-category" data-i18n="portfolio.cat.wordpress">WordPress</span>
+                      <h4 data-i18n="portfolio.p9.title">WordPress Website (Elementor)</h4>
                     </div>
 
                     <div class="portfolio-actions">
@@ -1196,8 +1228,8 @@
 
                   <div class="portfolio-overlay">
                     <div class="portfolio-info">
-                      <span class="project-category">Frontend</span>
-                      <h4>Responsive Landing Page</h4>
+                      <span class="project-category" data-i18n="portfolio.cat.frontend">Frontend</span>
+                      <h4 data-i18n="portfolio.p10.title">Responsive Landing Page</h4>
                     </div>
 
                     <div class="portfolio-actions">
@@ -1247,8 +1279,8 @@
 
                   <div class="portfolio-overlay">
                     <div class="portfolio-info">
-                      <span class="project-category">System</span>
-                      <h4>CRM System</h4>
+                      <span class="project-category" data-i18n="portfolio.cat.system">System</span>
+                      <h4 data-i18n="portfolio.p11.title">CRM System</h4>
                     </div>
 
                     <div class="portfolio-actions">
@@ -1308,8 +1340,8 @@
 
                   <div class="portfolio-overlay">
                     <div class="portfolio-info">
-                      <span class="project-category">System</span>
-                      <h4>Installment System</h4>
+                      <span class="project-category" data-i18n="portfolio.cat.system">System</span>
+                      <h4 data-i18n="portfolio.p12.title">Installment System</h4>
                     </div>
 
                     <div class="portfolio-actions">
@@ -1371,9 +1403,9 @@
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
-        <span class="subtitle">Contact</span>
-        <h2>Contact</h2>
-        <p>If you have an opportunity or a project in mind, feel free to reach out. I’ll get back to you as soon as
+        <span class="subtitle" data-i18n="contact.subtitle">Contact</span>
+        <h2 data-i18n="contact.title">Contact</h2>
+        <p data-i18n="contact.intro">If you have an opportunity or a project in mind, feel free to reach out. I’ll get back to you as soon as
           possible.</p>
       </div><!-- End Section Title -->
 
@@ -1387,8 +1419,8 @@
                 <i class="bi bi-geo-alt"></i>
               </div>
               <div>
-                <h3>Address</h3>
-                <p>Cairo, Egypt</p>
+                <h3 data-i18n="contact.address.title">Address</h3>
+                <p data-i18n="contact.address.value">Cairo, Egypt</p>
               </div>
             </div>
 
@@ -1397,7 +1429,7 @@
                 <i class="bi bi-telephone"></i>
               </div>
               <div>
-                <h3>Call Me</h3>
+                <h3 data-i18n="contact.call.title">Call Me</h3>
                 <p>+20 115 411 3708</p>
               </div>
             </div>
@@ -1407,7 +1439,7 @@
                 <i class="bi bi-envelope"></i>
               </div>
               <div>
-                <h3>Email Me</h3>
+                <h3 data-i18n="contact.email.title">Email Me</h3>
                 <p>ahmedayf43@gmail.com</p>
               </div>
             </div>
@@ -1419,27 +1451,27 @@
               <div class="row gy-4">
 
                 <div class="col-md-6">
-                  <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
+                  <input type="text" name="name" class="form-control" placeholder="Your Name" data-i18n-attr="placeholder:contact.form.name" required="">
                 </div>
 
                 <div class="col-md-6">
-                  <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
+                  <input type="email" class="form-control" name="email" placeholder="Your Email" data-i18n-attr="placeholder:contact.form.email" required="">
                 </div>
 
                 <div class="col-md-12">
-                  <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
+                  <input type="text" class="form-control" name="subject" placeholder="Subject" data-i18n-attr="placeholder:contact.form.subject" required="">
                 </div>
 
                 <div class="col-md-12">
-                  <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
+                  <textarea class="form-control" name="message" rows="6" placeholder="Message" data-i18n-attr="placeholder:contact.form.message" required=""></textarea>
                 </div>
 
                 <div class="col-md-12 text-center">
-                  <div class="loading">Loading</div>
+                  <div class="loading" data-i18n="contact.form.loading">Loading</div>
                   <div class="error-message"></div>
-                  <div class="sent-message">Your message has been sent. Thank you!</div>
+                  <div class="sent-message" data-i18n="contact.form.sent">Your message has been sent. Thank you!</div>
 
-                  <button type="submit">Send Message</button>
+                  <button type="submit" data-i18n="contact.form.send">Send Message</button>
                 </div>
 
               </div>
@@ -1458,9 +1490,9 @@
   <footer id="footer" class="footer">
 
     <div class="container copyright text-center mt-4">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">Ahmed</strong> <span>All Rights Reserved</span></p>
+      <p>© <span data-i18n="footer.copyright">Copyright</span> <strong class="px-1 sitename" data-i18n="footer.name">Ahmed</strong> <span data-i18n="footer.rights">All Rights Reserved</span></p>
       <div class="credits">
-        Designed by <a href="https://web.facebook.com/profile.php?id=61581147994815" target="_blank">Facebook</a> | <a
+        <span data-i18n="footer.designedBy">Designed by</span> <a href="https://web.facebook.com/profile.php?id=61581147994815" target="_blank">Facebook</a> | <a
           href="https://www.linkedin.com/in/ahmed-ali-b19450218/" target="_blank">LinkedIn</a>
       </div>
     </div>
@@ -1485,6 +1517,10 @@
   <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
   <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- i18n + Theme -->
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/theme.js"></script>
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
